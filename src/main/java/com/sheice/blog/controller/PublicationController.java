@@ -2,6 +2,7 @@ package com.sheice.blog.controller;
 
 
 import com.sheice.blog.dtos.PublicationDTO;
+import com.sheice.blog.entities.Publication;
 import com.sheice.blog.services.PublicationServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,4 +37,17 @@ public class PublicationController {
     public ResponseEntity<PublicationDTO> getPublicationById(@PathVariable(name = "id") Long id){
         return ResponseEntity.ok(publicationServices.getPublicationById(id));
     }
+
+    // update publication
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PublicationDTO> updatePublication(
+            @RequestBody PublicationDTO publicationDTO,
+            @PathVariable(name = "id") Long id)
+    {
+        PublicationDTO publicationResponse = publicationServices.updatePublication(publicationDTO, id);
+
+        return new ResponseEntity<>(publicationResponse, HttpStatus.OK);
+    }
+
 }
