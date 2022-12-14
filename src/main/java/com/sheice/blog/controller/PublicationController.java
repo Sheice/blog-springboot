@@ -29,9 +29,10 @@ public class PublicationController {
     public PublicationResponse listOfPublications(
             @RequestParam(value = "pageNum", defaultValue = "0", required = false) int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
             ){
-        return publicationServices.getAllPublications(pageNum, pageSize, sortBy);
+        return publicationServices.getAllPublications(pageNum, pageSize, sortBy, sortDir);
     }
 
     // get publication by id

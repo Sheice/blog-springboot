@@ -39,9 +39,11 @@ public class PublicationServicesIMPL implements PublicationServices{
 
     // GET ALL PUBLICATION
     @Override
-    public PublicationResponse getAllPublications(int pageNum, int pageSize, String sortBy) {
+    public PublicationResponse getAllPublications(int pageNum, int pageSize, String sortBy, String sortDir) {
 
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by(sortBy));
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortBy).ascending():Sort.by(sortBy  ).descending();
+
+        Pageable pageable = PageRequest.of(pageNum, pageSize, sort);
 
         Page<Publication> publications = publicationRepository.findAll(pageable);
 
