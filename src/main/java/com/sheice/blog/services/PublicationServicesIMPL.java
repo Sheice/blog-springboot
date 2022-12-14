@@ -44,7 +44,7 @@ public class PublicationServicesIMPL implements PublicationServices{
     public PublicationDTO getPublicationById(Long id) {
         Publication publication = publicationRepository.findById(id).
                 orElseThrow(
-                () -> new ResourceNotFoundException("Publicación", "id", id)
+                () -> new ResourceNotFoundException("La publicación", "el id", id)
         );
 
         return mappingDTO(publication);

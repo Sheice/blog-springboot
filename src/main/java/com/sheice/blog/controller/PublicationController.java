@@ -30,4 +30,10 @@ public class PublicationController {
     public List<PublicationDTO> listOfPublications(){
         return publicationServices.getAllPublications();
     }
+
+    // get publication by id
+    @GetMapping("/{id}")
+    public ResponseEntity<PublicationDTO> getPublicationById(@PathVariable(name = "id") Long id){
+        return ResponseEntity.ok(publicationServices.getPublicationById(id));
+    }
 }
