@@ -9,6 +9,9 @@ import com.sheice.blog.repositories.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ComentServicesIMPL implements ComentServices{
 
@@ -32,6 +35,13 @@ public class ComentServicesIMPL implements ComentServices{
         Coment newComent = comentRepository.save(coment);
 
         return mappingDTO(newComent);
+    }
+
+    @Override
+    public List<ComentDTO> getComentByPublicationId(Long publicationId) {
+        List<Coment> coments = comentRepository.findByPublicationId(publicationId);
+
+        return coments.stream().map(coment -> mappingDTO(coment)).collect(Collectors.toList());
     }
 
     // CUSTOM METHODS

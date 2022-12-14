@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class ComentController {
@@ -18,5 +20,10 @@ public class ComentController {
     public ResponseEntity<ComentDTO> saveComent(@PathVariable(value = "publicationId") Long publicationId,
     @RequestBody ComentDTO comentDTO){
         return new ResponseEntity<>(comentServices.createComent(publicationId, comentDTO), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/publicacion/{publicationId}/comentarios")
+    List<ComentDTO> listOfComentsByPublications(@PathVariable(value = "publicationId") Long publicationId){
+        return comentServices.getComentByPublicationId(publicationId);
     }
 }
