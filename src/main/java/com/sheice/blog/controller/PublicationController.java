@@ -2,14 +2,12 @@ package com.sheice.blog.controller;
 
 
 import com.sheice.blog.dtos.PublicationDTO;
-import com.sheice.blog.entities.Publication;
+import com.sheice.blog.dtos.PublicationResponse;
 import com.sheice.blog.services.PublicationServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/publications")
@@ -28,7 +26,7 @@ public class PublicationController {
     // get all publications
 
     @GetMapping
-    public List<PublicationDTO> listOfPublications(
+    public PublicationResponse listOfPublications(
             @RequestParam(value = "pageNum", defaultValue = "0", required = false) int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
             ){

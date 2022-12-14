@@ -1,6 +1,7 @@
 package com.sheice.blog.services;
 
 import com.sheice.blog.dtos.PublicationDTO;
+import com.sheice.blog.dtos.PublicationResponse;
 import com.sheice.blog.entities.Publication;
 import com.sheice.blog.exceptions.ResourceNotFoundException;
 import com.sheice.blog.repositories.PublicationRepository;
@@ -37,14 +38,27 @@ public class PublicationServicesIMPL implements PublicationServices{
 
     // GET ALL PUBLICATION
     @Override
-    public List<PublicationDTO> getAllPublications(int pageNum, int pageSize) {
+    public PublicationResponse getAllPublications(int pageNum, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNum, pageSize);
 
         Page<Publication> publications = publicationRepository.findAll(pageable);
 
         List<Publication> listOfPublications = publications.getContent();
-        return  listOfPublications.stream().map(publication -> mappingDTO(publication)).collect(Collectors.toList());
+        List<PublicationDTO> content =   listOfPublications.stream()
+                .map(publication -> mappingDTO(publication)).collect(Collectors.toList());
+
+        PublicationResponse publicationResponse = new PublicationResponse();
+
+        publicationResponse.setContent(content);
+        publicationResponse.setPageNum(publications.getNumber());
+        publicationResponse.setPageSize(publications.getSize());
+        publicationResponse.setTotalElements(publications.getTotalElements());
+        publicationResponse.setTotalPages(publications.getTotalPages());
+        publicationResponse.setLast(publications.isLast());
+
+        return publicationResponse;
+
     }
 
     // GET PUBLICATION BY ID
