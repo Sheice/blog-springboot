@@ -3,10 +3,12 @@ package com.sheice.blog.services;
 import com.sheice.blog.dtos.ComentDTO;
 import com.sheice.blog.entities.Coment;
 import com.sheice.blog.entities.Publication;
+import com.sheice.blog.exceptions.BlogAppException;
 import com.sheice.blog.exceptions.ResourceNotFoundException;
 import com.sheice.blog.repositories.ComentRepository;
 import com.sheice.blog.repositories.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +44,25 @@ public class ComentServicesIMPL implements ComentServices{
         List<Coment> coments = comentRepository.findByPublicationId(publicationId);
 
         return coments.stream().map(coment -> mappingDTO(coment)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ComentDTO getComentById(Long publicationId, Long comentId) {
+        Publication publication = publicationRepository.findById(publicationId).
+                orElseThrow(
+                        () -> new ResourceNotFoundException("La publicación", "el id", publicationId)
+                );
+
+        Coment coment = comentRepository.findById(comentId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("El comentario", "el id", comentId)
+                );
+
+        if(!coment.getPublication().getId().equals(publication.getId())){
+            throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicación");
+        }
+
+        return mappingDTO(coment);
     }
 
     // CUSTOM METHODS

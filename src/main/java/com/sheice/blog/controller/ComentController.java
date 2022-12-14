@@ -26,4 +26,14 @@ public class ComentController {
     List<ComentDTO> listOfComentsByPublications(@PathVariable(value = "publicationId") Long publicationId){
         return comentServices.getComentByPublicationId(publicationId);
     }
+
+    @GetMapping("/publicacion/{publicationId}/comentario/{comentId}")
+    public ResponseEntity<ComentDTO> getComentById(
+            @PathVariable(value = "publicationId") Long publicationId,
+            @PathVariable(value = "comentId") Long comentId
+    ){
+        ComentDTO comentDTO = comentServices.getComentById(publicationId, comentId);
+
+        return new ResponseEntity<>(comentDTO, HttpStatus.OK);
+    }
 }
