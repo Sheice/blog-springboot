@@ -28,7 +28,10 @@ public class PublicationController {
     // get all publications
 
     @GetMapping
-    public List<PublicationDTO> listOfPublications(){
+    public List<PublicationDTO> listOfPublications(
+            @RequestParam(value = "pageNum", defaultValue = "0", required = false) int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+            ){
         return publicationServices.getAllPublications();
     }
 
