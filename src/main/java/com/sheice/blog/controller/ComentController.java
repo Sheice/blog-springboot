@@ -36,4 +36,15 @@ public class ComentController {
 
         return new ResponseEntity<>(comentDTO, HttpStatus.OK);
     }
+
+    @PutMapping("/publicacion/{publicationId}/comentario/{comentId}")
+    public ResponseEntity<ComentDTO> editComent(
+            @PathVariable(value = "publicationId") Long publicationId,
+            @PathVariable(value = "comentId") Long comentId,
+            @RequestBody ComentDTO comentDTO
+    ){
+        ComentDTO comentEdited = comentServices.updateComent(publicationId,comentId,comentDTO);
+
+        return new ResponseEntity<>(comentEdited, HttpStatus.OK);
+    }
 }

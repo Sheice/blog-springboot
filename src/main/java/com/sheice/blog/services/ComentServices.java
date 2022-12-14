@@ -11,4 +11,6 @@ public interface ComentServices {
     public List<ComentDTO> getComentByPublicationId(Long publicationId);
 
     public ComentDTO getComentById(Long publicationId, Long comentId);
+
+    public ComentDTO updateComent(Long publicationId,Long comentId, ComentDTO requestOfComent);
 }

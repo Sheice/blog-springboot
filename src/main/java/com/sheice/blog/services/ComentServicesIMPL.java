@@ -65,6 +65,30 @@ public class ComentServicesIMPL implements ComentServices{
         return mappingDTO(coment);
     }
 
+    @Override
+    public ComentDTO updateComent(Long publicationId, Long comentId, ComentDTO requestOfComent) {
+        Publication publication = publicationRepository.findById(publicationId).
+                orElseThrow(
+                        () -> new ResourceNotFoundException("La publicación", "el id", publicationId)
+                );
+
+        Coment coment = comentRepository.findById(comentId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("El comentario", "el id", comentId)
+                );
+
+        if(!coment.getPublication().getId().equals(publication.getId())){
+            throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicación");
+        }
+        coment.setName(requestOfComent.getName());
+        coment.setEmail(requestOfComent.getEmail());
+        coment.setBody(requestOfComent.getBody());
+
+        Coment comentUpdated = comentRepository.save(coment);
+
+        return mappingDTO(comentUpdated);
+    }
+
     // CUSTOM METHODS
 
     private ComentDTO mappingDTO (Coment coment){
