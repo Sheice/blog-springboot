@@ -3,6 +3,9 @@ package com.sheice.blog.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "publications", uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})} )
 public class Publication {
@@ -19,6 +22,9 @@ public class Publication {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Coment> coments = new HashSet<>();
 
     // constructors
 
