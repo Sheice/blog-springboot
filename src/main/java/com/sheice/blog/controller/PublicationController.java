@@ -4,6 +4,7 @@ package com.sheice.blog.controller;
 import com.sheice.blog.dtos.PublicationDTO;
 import com.sheice.blog.dtos.PublicationResponse;
 import com.sheice.blog.services.PublicationServices;
+import com.sheice.blog.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,10 @@ public class PublicationController {
 
     @GetMapping
     public PublicationResponse listOfPublications(
-            @RequestParam(value = "pageNum", defaultValue = "0", required = false) int pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+            @RequestParam(value = "pageNum", defaultValue = Const.NUM_PAGE_DEFECT, required = false) int pageNum,
+            @RequestParam(value = "pageSize", defaultValue = Const.SIZE_PAGE_DEFECT, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = Const.SORT_DEFECT, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = Const.SORT_DIR_DEFECT, required = false) String sortDir
             ){
         return publicationServices.getAllPublications(pageNum, pageSize, sortBy, sortDir);
     }
