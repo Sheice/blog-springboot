@@ -2,6 +2,7 @@ package com.sheice.blog.services;
 
 import com.sheice.blog.dtos.PublicationDTO;
 import com.sheice.blog.entities.Publication;
+import com.sheice.blog.exceptions.ResourceNotFoundException;
 import com.sheice.blog.repositories.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,17 @@ public class PublicationServicesIMPL implements PublicationServices{
     public List<PublicationDTO> getAllPublications() {
         List<Publication> publications = publicationRepository.findAll();
         return  publications.stream().map(publication -> mappingDTO(publication)).collect(Collectors.toList());
+    }
+
+    // GET PUBLICATION BY ID
+    @Override
+    public PublicationDTO getPublicationById(Long id) {
+        Publication publication = publicationRepository.findById(id).
+                orElseThrow(
+                () -> new ResourceNotFoundException("Publicación", "id", id)
+        );
+
+        return mappingDTO(publication);
     }
 
     // CUSTOM METHODS

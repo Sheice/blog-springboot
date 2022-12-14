@@ -10,4 +10,6 @@ public interface PublicationServices {
 
     public List<PublicationDTO> getAllPublications();
 
+    public PublicationDTO getPublicationById(Long id);
+
 }
