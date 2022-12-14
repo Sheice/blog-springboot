@@ -32,7 +32,7 @@ public class PublicationController {
             @RequestParam(value = "pageNum", defaultValue = "0", required = false) int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
             ){
-        return publicationServices.getAllPublications();
+        return publicationServices.getAllPublications(pageNum, pageSize);
     }
 
     // get publication by id

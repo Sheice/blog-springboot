@@ -5,6 +5,9 @@ import com.sheice.blog.entities.Publication;
 import com.sheice.blog.exceptions.ResourceNotFoundException;
 import com.sheice.blog.repositories.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,9 +37,14 @@ public class PublicationServicesIMPL implements PublicationServices{
 
     // GET ALL PUBLICATION
     @Override
-    public List<PublicationDTO> getAllPublications() {
-        List<Publication> publications = publicationRepository.findAll();
-        return  publications.stream().map(publication -> mappingDTO(publication)).collect(Collectors.toList());
+    public List<PublicationDTO> getAllPublications(int pageNum, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+
+        Page<Publication> publications = publicationRepository.findAll(pageable);
+
+        List<Publication> listOfPublications = publications.getContent();
+        return  listOfPublications.stream().map(publication -> mappingDTO(publication)).collect(Collectors.toList());
     }
 
     // GET PUBLICATION BY ID
