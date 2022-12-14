@@ -50,4 +50,15 @@ public class PublicationController {
         return new ResponseEntity<>(publicationResponse, HttpStatus.OK);
     }
 
+    // delete publication
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePublication(
+            @PathVariable(name = "id") Long id)
+    {
+        publicationServices.deletePublication(id);
+
+        return new ResponseEntity<>("La publicación fué eliminada", HttpStatus.OK );
+    }
+
 }
