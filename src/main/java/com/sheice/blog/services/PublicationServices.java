@@ -12,4 +12,6 @@ public interface PublicationServices {
 
     public PublicationDTO getPublicationById(Long id);
 
+    public PublicationDTO updatePublication(PublicationDTO publicationDTO, Long id);
+
 }

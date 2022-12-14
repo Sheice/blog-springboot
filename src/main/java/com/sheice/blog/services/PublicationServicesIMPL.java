@@ -50,6 +50,24 @@ public class PublicationServicesIMPL implements PublicationServices{
         return mappingDTO(publication);
     }
 
+    // PUT PUBLICATION BY ID
+
+    @Override
+    public PublicationDTO updatePublication(PublicationDTO publicationDTO, Long id) {
+        Publication publication = publicationRepository.findById(id).
+                orElseThrow(
+                        () -> new ResourceNotFoundException("La publicación", "el id", id)
+                );
+
+        publication.setTitle(publicationDTO.getTitle());
+        publication.setDescription(publicationDTO.getDescription());
+        publication.setContent(publicationDTO.getContent());
+
+        Publication publicationUpdated = publicationRepository.save(publication);
+
+        return mappingDTO(publicationUpdated);
+    }
+
     // CUSTOM METHODS
 
     /* convert Entity to DTO */
