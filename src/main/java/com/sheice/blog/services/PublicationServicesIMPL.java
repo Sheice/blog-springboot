@@ -68,6 +68,18 @@ public class PublicationServicesIMPL implements PublicationServices{
         return mappingDTO(publicationUpdated);
     }
 
+    // DELETE PUBLICATION BY ID
+
+    @Override
+    public void deletePublication(Long id) {
+        Publication publication = publicationRepository.findById(id).
+                orElseThrow(
+                        () -> new ResourceNotFoundException("La publicación", "el id", id)
+                );
+
+        publicationRepository.delete(publication);
+    }
+
     // CUSTOM METHODS
 
     /* convert Entity to DTO */
