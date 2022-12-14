@@ -6,6 +6,9 @@ import com.sheice.blog.repositories.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PublicationServicesIMPL implements PublicationServices{
 
@@ -13,29 +16,51 @@ public class PublicationServicesIMPL implements PublicationServices{
     private PublicationRepository publicationRepository;
 
 
+    // CREATE PUBLICATION
+
     @Override
     public PublicationDTO createPublication(PublicationDTO publicationDTO) {
 
-        // convert DTO to Entity
+        Publication publication = mappingEntity(publicationDTO);
 
+        Publication newPublication = publicationRepository.save(publication);
+
+        PublicationDTO publicationResponse = mappingDTO(newPublication);
+
+
+        return publicationResponse;
+    }
+
+    // GET ALL PUBLICATION
+    @Override
+    public List<PublicationDTO> getAllPublications() {
+        List<Publication> publications = publicationRepository.findAll();
+        return  publications.stream().map(publication -> mappingDTO(publication)).collect(Collectors.toList());
+    }
+
+    // CUSTOM METHODS
+
+    /* convert Entity to DTO */
+    private PublicationDTO mappingDTO(Publication publication) {
+        PublicationDTO publicationDTO = new PublicationDTO();
+
+        publicationDTO.setId(publication.getId());
+        publicationDTO.setTitle(publication.getTitle());
+        publicationDTO.setDescription(publication.getDescription());
+        publicationDTO.setContent(publication.getContent());
+
+        return publicationDTO;
+    }
+
+    /* convert DTO to Entity */
+
+    private Publication mappingEntity(PublicationDTO publicationDTO){
         Publication publication = new Publication();
 
         publication.setTitle(publicationDTO.getTitle());
         publication.setDescription(publicationDTO.getDescription());
         publication.setContent(publicationDTO.getContent());
 
-        Publication newPublication = publicationRepository.save(publication);
-
-        // convert Entity to DTO
-
-        PublicationDTO publicationResponse = new PublicationDTO();
-
-        publicationResponse.setId(newPublication.getId());
-        publicationResponse.setTitle(newPublication.getTitle());
-        publicationResponse.setDescription(newPublication.getDescription());
-        publicationResponse.setContent(newPublication.getContent());
-
-
-        return publicationResponse;
+        return publication;
     }
 }
