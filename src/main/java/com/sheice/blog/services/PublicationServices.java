@@ -9,7 +9,7 @@ public interface PublicationServices {
 
     public PublicationDTO createPublication(PublicationDTO publicationDTO);
 
-    public PublicationResponse getAllPublications(int pageNum, int pageSize);
+    public PublicationResponse getAllPublications(int pageNum, int pageSize, String sortBy);
 
     public PublicationDTO getPublicationById(Long id);
 
