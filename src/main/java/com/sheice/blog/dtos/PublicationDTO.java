@@ -1,12 +1,16 @@
 package com.sheice.blog.dtos;
 
+import com.sheice.blog.entities.Coment;
+
+import java.util.Set;
+
 public class PublicationDTO {
 
     private Long id;
     private String title;
     private String description;
     private String content;
-
+    private Set<Coment> coments;
     // constructors
 
 
@@ -54,5 +58,13 @@ public class PublicationDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Set<Coment> getComents() {
+        return coments;
+    }
+
+    public void setComents(Set<Coment> coments) {
+        this.coments = coments;
     }
 }

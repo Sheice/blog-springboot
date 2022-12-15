@@ -1,6 +1,7 @@
 package com.sheice.blog.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -23,6 +24,7 @@ public class Publication {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Coment> coments = new HashSet<>();
 
@@ -77,5 +79,13 @@ public class Publication {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Set<Coment> getComents() {
+        return coments;
+    }
+
+    public void setComents(Set<Coment> coments) {
+        this.coments = coments;
     }
 }
