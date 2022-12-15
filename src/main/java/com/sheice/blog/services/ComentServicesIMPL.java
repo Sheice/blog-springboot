@@ -7,6 +7,7 @@ import com.sheice.blog.exceptions.BlogAppException;
 import com.sheice.blog.exceptions.ResourceNotFoundException;
 import com.sheice.blog.repositories.ComentRepository;
 import com.sheice.blog.repositories.PublicationRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class ComentServicesIMPL implements ComentServices{
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private ComentRepository comentRepository;
@@ -111,23 +115,13 @@ public class ComentServicesIMPL implements ComentServices{
     // CUSTOM METHODS
 
     private ComentDTO mappingDTO (Coment coment){
-        ComentDTO comentDTO = new ComentDTO();
-
-        comentDTO.setId(coment.getId());
-        comentDTO.setName(coment.getName());
-        comentDTO.setEmail(coment.getEmail());
-        comentDTO.setBody(coment.getBody());
+        ComentDTO comentDTO = modelMapper.map(coment, ComentDTO.class);
 
         return comentDTO;
     }
 
     private Coment mappingEntity(ComentDTO comentDTO){
-        Coment coment = new Coment();
-
-        coment.setId(comentDTO.getId());
-        coment.setName(comentDTO.getName());
-        coment.setEmail(comentDTO.getEmail());
-        coment.setBody(comentDTO.getBody());
+        Coment coment = modelMapper.map(comentDTO, Coment.class);
 
         return coment;
     }
