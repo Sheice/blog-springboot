@@ -5,6 +5,7 @@ import com.sheice.blog.dtos.PublicationDTO;
 import com.sheice.blog.dtos.PublicationResponse;
 import com.sheice.blog.services.PublicationServices;
 import com.sheice.blog.utils.Const;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class PublicationController {
     // create a publication
 
     @PostMapping
-    public ResponseEntity<PublicationDTO> savePublication(@RequestBody PublicationDTO publicationDTO){
+    public ResponseEntity<PublicationDTO> savePublication(@Valid @RequestBody PublicationDTO publicationDTO){
             return new ResponseEntity<>(publicationServices.createPublication(publicationDTO), HttpStatus.CREATED);
     }
 
@@ -46,7 +47,7 @@ public class PublicationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PublicationDTO> updatePublication(
-            @RequestBody PublicationDTO publicationDTO,
+            @Valid @RequestBody PublicationDTO publicationDTO,
             @PathVariable(name = "id") Long id)
     {
         PublicationDTO publicationResponse = publicationServices.updatePublication(publicationDTO, id);

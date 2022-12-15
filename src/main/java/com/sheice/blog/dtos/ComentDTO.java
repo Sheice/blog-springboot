@@ -1,11 +1,20 @@
 package com.sheice.blog.dtos;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class ComentDTO {
 
     private Long id;
 
+    @NotEmpty(message = "El nombre no debe estar vacío")
     private String name;
+    @NotEmpty(message = "El email no debe estar vacío")
+    @Email
     private String email;
+    @NotEmpty
+    @Size(min = 10, message = "El cuerpo del comentario deber tener al menos 10 carácteres")
     private String body;
 
     // constructors

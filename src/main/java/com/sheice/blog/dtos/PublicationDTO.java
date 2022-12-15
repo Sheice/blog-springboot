@@ -1,14 +1,22 @@
 package com.sheice.blog.dtos;
 
 import com.sheice.blog.entities.Coment;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.Set;
 
 public class PublicationDTO {
 
     private Long id;
+    @NotEmpty
+    @Size(min = 2, message = "El título de la publicación debería tener al menos 2 carácteres")
     private String title;
+
+    @NotEmpty
+    @Size(min = 10, message = "La descripción de la publicación debería tener al menos 10 carácteres")
     private String description;
+    @NotEmpty
     private String content;
     private Set<Coment> coments;
     // constructors
